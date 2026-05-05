@@ -1,153 +1,142 @@
-# MedNeuro - EEG
+# MedNeuro: EEG Meditation States and Traits
 
-## 1. Project Description
+MedNeuro is a research-driven web application for EEG-based meditation analysis.  
+It combines a React frontend dashboard with a Flask backend serving a trained machine-learning model for EEG region prediction.
 
-MedNeuro is a research-oriented project that bridges Neuroscience, AI for Decoding Meditation States and Traits Using Electroencephalography
+## Overview
 
-<!--## [View Colab](https://colab.research.google.com/drive/1oP8HSQmYyksIMZhsPeAkkWcAlFLAwcYk?usp=sharing) -->
+The project includes:
 
-## 2. Tech Stack
+- A dashboard with overview metrics, analytics, comparisons, insights, and statistical results
+- A regional classifier flow where users upload EEG JSON input and receive interpreted output
+- A Flask API that loads `eeg_model.pkl` and `feature_columns.json` to run inference
 
-### Frontend
-
-* React
-* Tailwind CSS
-* Figma (UI/UX design)
-* Lenis (smooth scrolling)
-* GSAP (animations and transitions)
-
-### Backend
-
-* Python
-* Flask
-* Google Colab (model training and experimentation)
-* Git Annex (large model and dataset versioning)
-* CUDA (parallel computation and acceleration)
-
-<br>
-
-## 3. Key Highlights
-- A research project, submitting implementation at IEEE
-
-<br>
-
-## 4. Project Structure
-
-```
-MedNeuro
-│
-├── client
-│   │   eslint.config.js
-│   │   index.html
-│   │   package.json
-│   │   package-lock.json
-│   │   postcss.config.js
-│   │   tailwind.config.js
-│   │   vite.config.js
-│   │   README.md
-│   │
-│   ├── public
-│   │   ├── DarkMode.png
-│   │   ├── LightMode.png
-│   │   └── vite.svg
-│   │
-│   └── src
-│       ├── App.jsx
-│       ├── App.css
-│       ├── index.css
-│       ├── main.jsx
-│       │
-│       ├── assets
-│       │   └── icons
-│       │       ├── favicon.png
-│       │       ├── icon-diet.png
-│       │       ├── icon-workout.png
-│       │       └── branding assets
-│       │
-│       ├── components
-│       │   ├── Card.jsx
-│       │   ├── Dropdown.jsx
-│       │   ├── Header.jsx
-│       │   ├── Sidebar.jsx
-│       │   ├── Layout.jsx
-│       │   ├── StatusBanner.jsx
-│       │   └── form
-│       │       ├── TextInput.jsx
-│       │       ├── TextArea.jsx
-│       │       └── SubmitButton.jsx
-│       │
-│       ├── hooks
-│       │   └── useTheme.js
-│       │
-│       ├── loaders
-│       │   ├── BrandNameAnimation.jsx
-│       │   ├── DoorAnimation.jsx
-│       │   └── LoaderPanels.jsx
-│       │
-│       └── pages
-│           ├── Dashboard.jsx
-│           ├── Analytics.jsx
-│           ├── AIAdvisor.jsx
-│           ├── Compare.jsx
-│           ├── Settings.jsx
-│           └── Admin.jsx
-│
-└── backend
-    │   app.py
-    │   requirements.txt
-    │
-    ├── templates
-    │   └── index.html
-    │
-    └── models
-        └── regionalClassifier.joblib
-```
-
-<br>
-
-## 5. Setup Overview
+## Tech Stack
 
 ### Frontend
 
-```
-cd MedNeuro/client
-npm install
-npm run dev
-```
+- React + Vite
+- Tailwind CSS
+- Recharts
+- React Router
+- Zustand (prediction state persistence across page changes)
 
 ### Backend
 
-It is recommended to use a Python virtual environment.
+- Flask
+- flask-cors
+- pandas
+- scikit-learn (for model inference)
 
+## Project Structure
+
+```text
+MedNeuro-Meditation_States_and_Traits/
+├─ client/
+│  ├─ public/
+│  ├─ src/
+│  │  ├─ api/
+│  │  ├─ assets/
+│  │  ├─ components/
+│  │  ├─ pages/
+│  │  ├─ store/
+│  │  ├─ App.jsx
+│  │  └─ main.jsx
+│  ├─ package.json
+│  └─ vite.config.js
+├─ backend/
+│  ├─ app.py
+│  ├─ eeg_model.pkl
+│  ├─ feature_columns.json
+│  └─ requirements.txt
+└─ README.md
 ```
-cd MedNeuro/backend
+
+## Frontend Routes
+
+- `/` Dashboard
+- `/upload-eeg` Regional classifier page (upload + interpreted result)
+- `/analytics` EEG analytics view
+- `/compare` EEG group/model comparison view
+- `/stat-results` Statistical results page
+- `/settings` System settings and backend/model info
+
+Note: Some views are also rendered as in-page tabs (for example in Dashboard and Upload page sections).
+
+## Backend API
+
+Base URL (local): `http://127.0.0.1:5000`
+
+### `GET /health`
+
+Returns backend status and model load state.
+
+### `GET /model/info`
+
+Returns model metadata such as feature count and accepted channels.
+
+### `POST /predict`
+
+Input:
+
+```json
+{
+  "theta_rel": 0.18,
+  "alpha_rel": 0.46,
+  "beta_rel": 0.22,
+  "gamma_rel": 0.06,
+  "channel": "O1"
+}
+```
+
+Output:
+
+```json
+{
+  "prediction": {
+    "region": "Occipital",
+    "brainwaves": ["Alpha", "Gamma"],
+    "description": "Visual processing and sensory awareness",
+    "state": "Deep awareness, open monitoring",
+    "insight": "User is likely in a relaxed but highly aware state with strong sensory integration"
+  }
+}
+```
+
+### `POST /predict/batch`
+
+Accepts `{ "samples": [ ... ] }` and returns interpreted prediction per sample.
+
+## Setup
+
+## 1) Backend
+
+```bash
+cd backend
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+# source venv/bin/activate
 pip install -r requirements.txt
 python app.py
 ```
 
-<br>
+## 2) Frontend
 
-## 6. Machine Learning Integration
-- Binary classifier
-- Multiclass classifier
+```bash
+cd client
+npm install
+npm run dev
+```
 
-<br>
+Frontend default URL: `http://localhost:5173`
 
-## 7. Demo
+## Environment Notes
 
-Live demo:
-[https://med-neuro.netlify.app/](https://med-neuro.netlify.app/)
+- Frontend API base can be configured via `VITE_API_BASE_URL`.
+- If unset, frontend uses `http://127.0.0.1:5000`.
 
-<br>
+## License
 
-## 8. License
-
-This project is released under the MIT License.
-
-<br>
-
-## 9. Author
-
-[Yash-bandal](https://github.com/Yash-Bandal)
+This project is released under the MIT License. See `LICENSE`.
