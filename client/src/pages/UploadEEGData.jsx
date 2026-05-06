@@ -8,13 +8,13 @@ import Analytics from "./Analytics";
 
 
 import HB from "../assets/HB.webm";
-import RTImg from "../assets/RTImg.png";
+import RTImg from "../assets/webp/RTImg.webp";
 
 
-import Temporal from "../assets/Temporal.png";
-import Occipital from "../assets/Occipital.png";
-import Parietal from "../assets/Parietal.png";
-import Frontal from "../assets/Frontal.png";
+import Temporal from "../assets/webp/Temporal.webp";
+import Occipital from "../assets/webp/Occipital.webp";
+import Parietal from "../assets/webp/Parietal.webp";
+import Frontal from "../assets/webp/Frontal.webp";
 
 
 
