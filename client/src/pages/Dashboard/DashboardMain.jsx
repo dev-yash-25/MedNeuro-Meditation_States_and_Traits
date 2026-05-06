@@ -327,7 +327,7 @@ const DashboardMain = () => {
                                                     href="https://colab.research.google.com/drive/15ZKUyFSTHukC9o8vtCAol-1-3G67iOWc?usp=sharing"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="hidden sm:visible rounded-lg border border-slate-200 p-3 hover:bg-slate-50 transition-colors"
+                                                    className="hidden sm:block rounded-lg border border-slate-200 p-3 hover:bg-slate-50 transition-colors"
                                                 >
                                                     <div className="flex items-center gap-2 mb-1 text-slate-700">
                                                         <Code2 size={16} className="text-black" />
